@@ -1,9 +1,10 @@
-package com.eduvilar.zenhome.activities;
+package com.eduvilar.zenhome.activities.base;
 
-import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -19,12 +20,22 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by efraespada on 23/11/2017.
+ */
+
+public abstract class BaseActivity extends AppCompatActivity {
+
+    protected abstract IDrawerItem[] getNavigationItems();
+
+    protected abstract @LayoutRes int getLayout();
+
+    protected abstract Fragment[] fragments();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(getLayout());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -47,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .build();
 
-        Drawer result = new DrawerBuilder()
+        DrawerBuilder builder = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withAccountHeader(headerResult)
@@ -63,8 +74,11 @@ public class MainActivity extends AppCompatActivity {
                         // do something with the clicked item :D
                         return false;
                     }
-                })
-                .build();
+                });
+
+        builder.addDrawerItems(getNavigationItems());
+
+        builder.build();
     }
 
     @Override
@@ -81,3 +95,4 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
+

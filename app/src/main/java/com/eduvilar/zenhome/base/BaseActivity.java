@@ -28,7 +28,9 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    protected abstract IDrawerItem[] getNavigationItems();
+    protected IDrawerItem[] getNavigationItems() {
+        return new IDrawerItem[0];
+    }
 
     protected abstract @LayoutRes int getLayout();
 

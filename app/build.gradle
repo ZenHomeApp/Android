@@ -79,4 +79,20 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${versions.supportLib}"
     compile "com.android.support:support-annotations:${versions.supportLib}"
     compile "com.android.support:design:${versions.supportLib}"
+    compile 'efraespada:androidstringobfuscator:0.4.1'
+    compile 'com.google.code.gson:gson:2.8.2'
+}
+
+android.applicationVariants.all{ variant ->
+    variant.mergeResources.doLast{
+        println  ":initStringObfuscator:" + project.name + ":" + variant.dirName
+        javaexec {
+            main = "-jar";
+            args = [
+                    "../AndroidStringObfuscator.jar",
+                    project.name,
+                    variant.dirName
+            ]
+        }
+    }
 }

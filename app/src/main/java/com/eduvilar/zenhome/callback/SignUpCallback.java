@@ -1,14 +1,12 @@
 package com.eduvilar.zenhome.callback;
 
-import com.eduvilar.zenhome.model.User;
-
 /**
  * Created by eduardovilar10 on 25/11/2017.
  */
 
-public interface LoginCallback {
+public interface SignUpCallback {
 
-    void success(User user);
+    void success(String name);
 
     void fail(String error);
 

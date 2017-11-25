@@ -8,6 +8,7 @@ public class User {
 
     private String name;
     private String email;
+    private String password;
     private Boolean notificationsEnabled;
 
     public User() {
@@ -41,5 +42,13 @@ public class User {
 
     public void setNotificationsEnabled(boolean notificationsEnabled) {
         this.notificationsEnabled = notificationsEnabled;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

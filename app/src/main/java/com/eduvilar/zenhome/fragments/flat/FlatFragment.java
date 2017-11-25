@@ -12,7 +12,7 @@ import com.eduvilar.zenhome.base.BaseFragment;
 import com.eduvilar.zenhome.fragments.home.HomeContract;
 
 /**
- * Created by efraespada on 25/11/2017.
+ * Created by eduardovilar10 on 25/11/2017.
  */
 
 public class FlatFragment extends BaseFragment implements FlatContract.View {

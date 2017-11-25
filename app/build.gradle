@@ -17,6 +17,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "data"
+
+    productFlavors {
+        sharedpreferences {
+            dimension "data"
+        }
+        sqlite {
+            dimension "data"
+        }
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java']
+        }
+        sharedpreferences {
+            java.srcDirs = ['src/sharedpreferences/java']
+        }
+        sqlite {
+            java.srcDirs = ['src/sqlite/java']
+        }
+    }
+
 }
 
 dependencies {

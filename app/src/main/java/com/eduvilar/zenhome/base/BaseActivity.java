@@ -23,7 +23,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 /**
- * Created by efraespada on 23/11/2017.
+ * Created by eduardovilar10 on 23/11/2017.
  */
 
 public abstract class BaseActivity extends AppCompatActivity {

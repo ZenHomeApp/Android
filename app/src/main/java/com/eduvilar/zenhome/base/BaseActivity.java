@@ -1,14 +1,16 @@
-package com.eduvilar.zenhome.activities.base;
+package com.eduvilar.zenhome.base;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.eduvilar.zenhome.R;
+import com.eduvilar.zenhome.model.Pager;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -30,7 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract @LayoutRes int getLayout();
 
-    protected abstract Fragment[] fragments();
+    protected abstract BaseFragment[] fragments();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,24 +63,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         DrawerBuilder builder = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
-                .withAccountHeader(headerResult)
-                .addDrawerItems(
-                        item1,
-                        new DividerDrawerItem(),
-                        item2,
-                        new SecondaryDrawerItem().withName("Settings")
-                )
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        // do something with the clicked item :D
-                        return false;
-                    }
-                });
+                .withAccountHeader(headerResult);
 
         builder.addDrawerItems(getNavigationItems());
 
         builder.build();
+
+        Pager pager = (Pager) findViewById(R.id.pager);
+        pager.init(this, fragments(), getFragmentManager());
     }
 
     @Override

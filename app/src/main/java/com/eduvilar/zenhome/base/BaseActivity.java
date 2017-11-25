@@ -23,7 +23,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 /**
- * Created by efraespada on 23/11/2017.
+ * Created by eduardovilar10 on 23/11/2017.
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -34,6 +34,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract BaseFragment[] fragments();
 
+    private Pager pager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +44,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //if you want to update the items at a later time it is recommended to keep it in a variable
-        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName("Inicio");
-        SecondaryDrawerItem item2 = new SecondaryDrawerItem().withIdentifier(2).withName("Vivienda");
-
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
+                .withSelectionListEnabledForSingleProfile(false)
                 .withHeaderBackground(R.drawable.header)
                 .addProfiles(
                         new ProfileDrawerItem().withName("Eduardo Vilar").withEmail("eduardovilar10@gmail.com").withIcon(getResources().getDrawable(R.mipmap.ic_launcher_round))
@@ -69,8 +68,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         builder.build();
 
-        Pager pager = (Pager) findViewById(R.id.pager);
+        pager = (Pager) findViewById(R.id.pager);
+        pager.setOffscreenPageLimit(fragments().length);
         pager.init(this, fragments(), getFragmentManager());
+        pager.setCurrentItem(fragments()[0].getClass());
     }
 
     @Override
@@ -85,6 +86,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    public void showFragment(Class<? extends BaseFragment> clazz) {
+        pager.setCurrentItem(clazz);
+    }
 
 }
 

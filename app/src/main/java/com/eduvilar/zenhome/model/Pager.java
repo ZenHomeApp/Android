@@ -3,6 +3,7 @@ package com.eduvilar.zenhome.model;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -29,6 +30,8 @@ public class Pager extends ViewPager implements ViewPager.PageTransformer {
         super(context);
     }
 
+    protected OnPageChangeListener listener;
+
     public Pager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -49,13 +52,53 @@ public class Pager extends ViewPager implements ViewPager.PageTransformer {
         return false;
     }
 
-    public void setCurrentItem(Class<BaseFragment> clazz) {
+    @Override
+    public void setOnPageChangeListener(OnPageChangeListener listener) {
+        super.setOnPageChangeListener(listener);
+        this.listener = listener;
+    }
+
+    public void setCurrentItem(Class<? extends BaseFragment> clazz) {
         setCurrentItem(clazz, false);
     }
 
-    public void setCurrentItem(Class<BaseFragment> clazz, boolean transition) {
+    public void setCurrentItem(Class<? extends BaseFragment> clazz, boolean transition) {
+        int i = -1;
+        for (int t = 0; t < fragments.length; t++) {
+            if (fragments[t].getClass().getSimpleName().equals(clazz.getSimpleName())) {
+                i = t;
+                break;
+            }
+        }
+        if (i > -1) {
+            setCurrentItem(i, transition);
+            if (fragments[i].isViewReady()) {
+                fragments[i].init();
+            } else {
+                final int a = i;
+                Handler handler = new Handler();
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        fragments[a].init();
+                    }
+                };
+                handler.postDelayed(runnable, 200);
+            }
+        }
+    }
 
-        setCurrentItem(0, transition);
+    @Override
+    public void setCurrentItem(int item) {
+        boolean invokeMeLater = false;
+
+        if(super.getCurrentItem() == 0 && item == 0)
+            invokeMeLater = true;
+
+        super.setCurrentItem(item);
+
+        if(invokeMeLater && listener != null)
+            listener.onPageSelected(0);
     }
 
     @Override

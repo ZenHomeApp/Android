@@ -46,7 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withSelectionListEnabledForSingleProfile(true)
+                .withSelectionListEnabledForSingleProfile(false)
                 .withHeaderBackground(R.drawable.header)
                 .addProfiles(
                         new ProfileDrawerItem().withName("Eduardo Vilar").withEmail("eduardovilar10@gmail.com").withIcon(getResources().getDrawable(R.mipmap.ic_launcher_round))
@@ -69,7 +69,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         builder.build();
 
         pager = (Pager) findViewById(R.id.pager);
+        pager.setOffscreenPageLimit(fragments().length);
         pager.init(this, fragments(), getFragmentManager());
+        pager.setCurrentItem(fragments()[0].getClass());
     }
 
     @Override

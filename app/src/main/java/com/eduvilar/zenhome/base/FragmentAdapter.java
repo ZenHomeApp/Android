@@ -34,7 +34,7 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
         return super.isViewFromObject(view, object);
     }
 
-    private Integer getFragmentPosition(BaseFragment fragment) {
+    public Integer getFragmentPosition(BaseFragment fragment) {
         Integer pos = null;
 
         for (int i = 0; i < fragments.length; i++) {

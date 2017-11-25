@@ -49,13 +49,21 @@ public class Pager extends ViewPager implements ViewPager.PageTransformer {
         return false;
     }
 
-    public void setCurrentItem(Class<BaseFragment> clazz) {
+    public void setCurrentItem(Class<? extends BaseFragment> clazz) {
         setCurrentItem(clazz, false);
     }
 
-    public void setCurrentItem(Class<BaseFragment> clazz, boolean transition) {
-
-        setCurrentItem(0, transition);
+    public void setCurrentItem(Class<? extends BaseFragment> clazz, boolean transition) {
+        int i = -1;
+        for (int t = 0; t < fragments.length; t++) {
+            if (fragments[t].getClass().getSimpleName().equals(clazz.getSimpleName())) {
+                i = t;
+                break;
+            }
+        }
+        if (i > -1) {
+            setCurrentItem(i, transition);
+        }
     }
 
     @Override

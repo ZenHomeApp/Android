@@ -1,45 +1,42 @@
-package com.eduvilar.zenhome.fragments.login;
+package com.eduvilar.zenhome.fragments.signup;
 
-import android.os.Handler;
-
-import com.eduvilar.zenhome.callback.LoginCallback;
-import com.eduvilar.zenhome.data.GetData;
-import com.eduvilar.zenhome.fragments.flat.FlatContract;
+import com.eduvilar.zenhome.callback.SignUpCallback;
+import com.eduvilar.zenhome.data.PostData;
 import com.eduvilar.zenhome.model.User;
 
 /**
  * Created by eduardovilar10 on 25/11/2017.
  */
 
-public class LoginPresenter implements LoginContract.Presenter {
+public class SignUpPresenter implements SignUpContract.Presenter {
 
-    private LoginContract.View view;
-    private GetData getData;
+    private SignUpContract.View view;
+    private PostData postData;
 
-    public LoginPresenter(LoginContract.View view) {
+    public SignUpPresenter(SignUpContract.View view) {
         this.view = view;
-        getData = new GetData();
+        postData = new PostData();
     }
 
     @Override
     public void init() {
-        view.onViewReady();
+        // nothing to do here
     }
 
     @Override
-    public void login(String email, String password) {
-        getData.logInUser(email, password, new LoginCallback() {
+    public void signUp(User user) {
+        view.signingUp();
+        postData.signUpUser(user, new SignUpCallback() {
             @Override
-            public void success(User user) {
-
+            public void success(String name) {
+                view.signedUp(name);
             }
 
             @Override
             public void fail(String error) {
-
+                view.error(error);
             }
         });
     }
-
 
 }

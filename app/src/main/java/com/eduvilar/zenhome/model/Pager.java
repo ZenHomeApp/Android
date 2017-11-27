@@ -130,8 +130,8 @@ public class Pager extends ViewPager implements ViewPager.PageTransformer {
         mScroller.setScrollDuration(duration);
     }
 
-    public Class<? extends BaseFragment> getCurrentFragment() {
-        return fragments[getCurrentItem()].getClass();
+    public BaseFragment getCurrentFragment() {
+        return fragments[getCurrentItem()];
     }
 
 

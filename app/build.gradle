@@ -81,6 +81,7 @@ dependencies {
     compile "com.android.support:design:${versions.supportLib}"
     compile 'efraespada:androidstringobfuscator:0.4.1'
     compile 'com.google.code.gson:gson:2.8.2'
+    compile 'com.tapadoo.android:alerter:2.0.1'
 }
 
 android.applicationVariants.all{ variant ->

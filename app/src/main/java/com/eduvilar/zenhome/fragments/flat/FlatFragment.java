@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.eduvilar.zenhome.R;
 import com.eduvilar.zenhome.base.BaseFragment;
 import com.eduvilar.zenhome.fragments.home.HomeContract;
+import com.eduvilar.zenhome.fragments.home.HomeFragment;
 
 /**
  * Created by eduardovilar10 on 25/11/2017.
@@ -35,6 +36,11 @@ public class FlatFragment extends BaseFragment implements FlatContract.View {
     public void view(View view) {
         loadingView = (LinearLayout) view.findViewById(R.id.loading_view);
         contentView = (LinearLayout) view.findViewById(R.id.content_view);
+    }
+
+    @Override
+    public void onBackPressed() {
+        activity().showFragment(HomeFragment.class);
     }
 
     @Override

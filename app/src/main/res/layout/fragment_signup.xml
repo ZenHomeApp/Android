@@ -11,13 +11,38 @@
         android:id="@+id/content_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TEST"/>
+            android:inputType="text"
+            android:hint="Email"
+            style="@style/Base.V12.Widget.AppCompat.EditText"/>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Password"
+            style="@style/Base.V12.Widget.AppCompat.EditText"/>
+
+
+        <Button
+            android:id="@+id/signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registarse"
+            style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"/>
+
 
     </LinearLayout>
+
 
 </LinearLayout>

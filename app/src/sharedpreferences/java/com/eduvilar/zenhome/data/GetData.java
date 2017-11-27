@@ -32,8 +32,8 @@ public class GetData implements DataContract.Get {
                 User user = gson.fromJson(storedUser, User.class);
                 if (user.getPassword().equals(enPass)) {
                     callback.success(user);
-                } else {
-                    callback.fail("wrong_password");
+                } else if (user == null) {
+                    callback.fail("user_not_found");
                 }
             } catch (Exception e) {
                 e.printStackTrace();

@@ -31,12 +31,12 @@ public class LoginPresenter implements LoginContract.Presenter {
         getData.logInUser(email, password, new LoginCallback() {
             @Override
             public void success(User user) {
-
+                view.success(user.getEmail());
             }
 
             @Override
             public void fail(String error) {
-
+                view.error(error);
             }
         });
     }

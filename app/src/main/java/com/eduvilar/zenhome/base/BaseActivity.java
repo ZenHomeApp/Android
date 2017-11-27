@@ -77,6 +77,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        pager.getCurrentFragment().onBackPressed();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         // ...
@@ -89,7 +94,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showFragment(Class<? extends BaseFragment> clazz) {
-        pager.setCurrentItem(clazz);
+        showFragment(clazz, false);
+    }
+
+    public void showFragment(Class<? extends BaseFragment> clazz, boolean transition) {
+        pager.setCurrentItem(clazz, transition);
     }
 
 }

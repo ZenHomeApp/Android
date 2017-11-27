@@ -30,7 +30,7 @@ public class PostData implements DataContract.Post {
             SharedPreferences.Editor editor = shared.edit();
             editor.putString(enEmail, AndroidStringObfuscator.encryptString(gson.toJson(user,User.class)));
             editor.apply();
-            callback.success(user.getName());
+            callback.success(user.getEmail());
         } catch (Exception e) {
             callback.fail("error_signing_up_user");
         }

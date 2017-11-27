@@ -28,7 +28,9 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    protected abstract IDrawerItem[] getNavigationItems();
+    protected IDrawerItem[] getNavigationItems() {
+        return new IDrawerItem[0];
+    }
 
     protected abstract @LayoutRes int getLayout();
 
@@ -75,6 +77,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        pager.getCurrentFragment().onBackPressed();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         // ...
@@ -87,7 +94,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showFragment(Class<? extends BaseFragment> clazz) {
-        pager.setCurrentItem(clazz);
+        showFragment(clazz, false);
+    }
+
+    public void showFragment(Class<? extends BaseFragment> clazz, boolean transition) {
+        pager.setCurrentItem(clazz, transition);
     }
 
 }

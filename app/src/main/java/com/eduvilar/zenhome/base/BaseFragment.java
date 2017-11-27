@@ -22,6 +22,12 @@ public abstract class BaseFragment extends Fragment {
 
     public boolean viewReady;
 
+    public BaseActivity activity() {
+        return (BaseActivity) getActivity();
+    }
+
+    public abstract void onBackPressed();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

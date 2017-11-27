@@ -1,9 +1,11 @@
 package com.eduvilar.zenhome.data;
 
 import com.eduvilar.zenhome.callback.LoginCallback;
+import com.eduvilar.zenhome.callback.SignUpCallback;
+import com.eduvilar.zenhome.model.User;
 
 /**
- * Created by efraespada on 25/11/2017.
+ * Created by eduardovilar10 on 25/11/2017.
  */
 
 public interface DataContract {
@@ -16,7 +18,7 @@ public interface DataContract {
 
     interface Post {
 
-        void singUpUser();
+        void signUpUser(User user, SignUpCallback callback);
 
     }
 }

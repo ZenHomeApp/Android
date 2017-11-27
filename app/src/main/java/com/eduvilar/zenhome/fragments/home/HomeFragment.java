@@ -37,6 +37,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     }
 
     @Override
+    public void onBackPressed() {
+        activity().finish();
+    }
+
+    @Override
     public void init() {
         if (presenter == null) {
             presenter = new HomePresenter(this);

@@ -22,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
+            android:text="penebravo@gmail.com"
             android:hint="Email"
             style="@style/Base.V12.Widget.AppCompat.EditText"/>
 
@@ -30,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
+            android:text="password"
             android:hint="Password"
             style="@style/Base.V12.Widget.AppCompat.EditText"/>
 

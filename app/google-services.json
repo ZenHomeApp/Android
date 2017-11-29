@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "737795219288",
+    "firebase_url": "https://zenhome-app.firebaseio.com",
+    "project_id": "zenhome-app",
+    "storage_bucket": "zenhome-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737795219288:android:199d1e7568e93a1b",
+        "android_client_info": {
+          "package_name": "com.eduvilar.zenhome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "737795219288-20h4hm3o0lbrov70m1dhdf2pva154gqj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe4ePEu5WaBssLZ5FaXngJZ7NjSxvRzvM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

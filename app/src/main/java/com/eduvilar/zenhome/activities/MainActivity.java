@@ -34,7 +34,7 @@ public class MainActivity extends BaseActivity {
                     }
                 }),
                 new DividerDrawerItem(),
-                new SecondaryDrawerItem().withName("Settings")
+                new SecondaryDrawerItem().withIdentifier(SETTINGS).withName("Settings")
         };
     }
 

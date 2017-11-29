@@ -10,17 +10,22 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.eduvilar.zenhome.R;
+import com.eduvilar.zenhome.callback.FragmentChangeCallback;
 import com.eduvilar.zenhome.model.Pager;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.ContainerDrawerItem;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+
+import java.util.List;
 
 /**
  * Created by eduardovilar10 on 23/11/2017.
@@ -36,7 +41,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract BaseFragment[] fragments();
 
+    protected long SETTINGS = 44;
+
+    protected Drawer sidebar;
+
     private Pager pager;
+
+    private static final int ACTION_ITEM = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +79,30 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         builder.addDrawerItems(getNavigationItems());
 
-        builder.build();
+        sidebar = builder.build();
 
         pager = (Pager) findViewById(R.id.pager);
         pager.setOffscreenPageLimit(fragments().length);
-        pager.init(this, fragments(), getFragmentManager());
+        pager.init(this, fragments(), getFragmentManager(), new FragmentChangeCallback() {
+            @Override
+            public void fragmentChanged(Class<? extends BaseFragment> clazz) {
+                /*List<IDrawerItem> drawerItems = sidebar.getDrawerItems();
+                IDrawerItem[] navigationItems = getNavigationItems();
+                IDrawerItem[] actionItems = pager.getCurrentFragment().getActionItems();
+
+                for (int i = 0; i < drawerItems.size(); i++) {
+                    if (i >= navigationItems.length && drawerItems.get(i).getIdentifier() != SETTINGS) {
+                        sidebar.removeItemByPosition(i);
+                    }
+                }
+
+                sidebar.addItemAtPosition(new SectionDrawerItem().withName("Acciones"), navigationItems.length + 1);
+
+                for (int i = 0; i < actionItems.length; i++) {
+                    sidebar.addItemAtPosition(actionItems[i], i + 1 + navigationItems.length);
+                }*/
+            }
+        });
         pager.setCurrentItem(fragments()[0].getClass());
     }
 

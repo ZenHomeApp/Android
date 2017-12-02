@@ -19,10 +19,10 @@ buildscript {
 
     ext {
         setup = [
-                compileSdk: 27,
+                compileSdk: 25,
                 buildTools: "25.4.0",
                 minSdk    : 14,
-                targetSdk : 27
+                targetSdk : 25
         ]
 
         versions = [

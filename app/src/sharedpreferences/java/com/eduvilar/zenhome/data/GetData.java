@@ -17,7 +17,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class GetData implements DataContract.Get {
 
-    private User user;
     private static String SIGNED_UP_USERS = "signed_up_users";
     private static String EMPTY_OBJECT = "{}";
 

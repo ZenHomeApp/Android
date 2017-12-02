@@ -3,20 +3,17 @@ package com.eduvilar.zenhome.utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.widget.ImageView;
 
 import com.eduvilar.zenhome.BuildConfig;
 import com.eduvilar.zenhome.callback.ImageUploadCallback;
-import com.eduvilar.zenhome.model.UploadImageView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.util.UUID;
 
 /**
  * Created by efraespada on 29/11/2017.
@@ -36,7 +33,7 @@ public class UploadImageUtils {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-        UploadTask uploadTask = FirebaseStorage.getInstance().getReference().child(BuildConfig.BUILD_TYPE).putBytes(data);
+        UploadTask uploadTask = FirebaseStorage.getInstance().getReference().child(BuildConfig.BUILD_TYPE).child(UUID.randomUUID().toString()).putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {

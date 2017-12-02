@@ -8,6 +8,7 @@ public class User {
 
     private String name;
     private String email;
+    private String photoURL;
     private String password;
     private Boolean notificationsEnabled;
 
@@ -15,8 +16,9 @@ public class User {
         // nothing to do here
     }
 
-    public User(String email, String password) {
+    public User(String email, String password, String photoURL) {
         this.email = email;
+        this.photoURL = photoURL;
         this.password = password;
     }
 
@@ -50,5 +52,9 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhotoURL() {
+        return photoURL;
     }
 }

@@ -7,6 +7,8 @@ import com.eduvilar.zenhome.base.BaseActivity;
 import com.eduvilar.zenhome.base.BaseFragment;
 import com.eduvilar.zenhome.fragments.flat.FlatFragment;
 import com.eduvilar.zenhome.fragments.home.HomeFragment;
+import com.eduvilar.zenhome.model.User;
+import com.eduvilar.zenhome.utils.UserUtils;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -14,7 +16,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     protected IDrawerItem[] getNavigationItems() {
@@ -63,5 +65,8 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
     }
 
-
+    @Override
+    protected User getProfileInfo() {
+        return UserUtils.user();
+    }
 }

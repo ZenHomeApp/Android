@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -15,7 +15,16 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginTop="50dp"
         android:orientation="vertical">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/image_profile"
+            android:layout_width="60dp"
+            android:scaleType="centerCrop"
+            android:layout_height="60dp"
+            app:riv_corner_radius="30dp" />
 
         <EditText
             android:id="@+id/email"

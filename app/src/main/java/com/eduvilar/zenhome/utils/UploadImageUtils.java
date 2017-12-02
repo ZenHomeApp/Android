@@ -1,6 +1,7 @@
 package com.eduvilar.zenhome.utils;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -27,33 +28,26 @@ public class UploadImageUtils {
         // nothing to do here
     }
 
-    public static void upload(final UploadImageView view, final ImageUploadCallback callback) {
-        Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
+    public static void upload(final String path, final ImageUploadCallback callback) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = FirebaseStorage.getInstance().getReference().child(BuildConfig.BUILD_TYPE).putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
-            public void run() {
-                Bitmap bitmap = view.getDrawingCache();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] data = baos.toByteArray();
-
-                UploadTask uploadTask = FirebaseStorage.getInstance().getReference().child(BuildConfig.BUILD_TYPE).putBytes(data);
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        callback.error(exception.getLocalizedMessage());
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                        callback.success(taskSnapshot.getMetadata().getDownloadUrl().toString());
-                        view.end();
-                    }
-                });
+            public void onFailure(@NonNull Exception exception) {
+                callback.error(exception.getLocalizedMessage());
             }
-        };
-        handler.postDelayed(runnable, 7000);
-
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                callback.success(taskSnapshot.getMetadata().getDownloadUrl().toString());
+            }
+        });
     }
 }

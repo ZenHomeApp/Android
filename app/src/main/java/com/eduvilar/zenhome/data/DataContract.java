@@ -18,7 +18,7 @@ public interface DataContract {
 
     interface Post {
 
-        void signUpUser(User user, SignUpCallback callback);
+        void signUpUser(String email, String password, String photoPath, SignUpCallback callback);
 
     }
 }

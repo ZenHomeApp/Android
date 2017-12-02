@@ -49,18 +49,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         contentView = (LinearLayout) view.findViewById(R.id.content_view);
         profile = (UploadImageView) view.findViewById(R.id.profile);
 
-
-        UploadImageUtils.upload(profile, new ImageUploadCallback() {
-            @Override
-            public void success(String url) {
-                Log.e("TEST", "url: " + url);
-            }
-
-            @Override
-            public void error(String error) {
-                Log.e("TEST", "error: " + error);
-            }
-        });
     }
 
     @Override

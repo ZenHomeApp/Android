@@ -2,6 +2,7 @@ package com.eduvilar.zenhome.data;
 
 import com.eduvilar.zenhome.callback.LoginCallback;
 import com.eduvilar.zenhome.callback.SignUpCallback;
+import com.eduvilar.zenhome.callback.UpdateUserCallback;
 import com.eduvilar.zenhome.model.User;
 
 /**
@@ -18,7 +19,9 @@ public interface DataContract {
 
     interface Post {
 
-        void signUpUser(User user, SignUpCallback callback);
+        void signUpUser(String email, String password, String photoPath, SignUpCallback callback);
+
+        void saveUser(UpdateUserCallback callback);
 
     }
 }

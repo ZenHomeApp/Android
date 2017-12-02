@@ -14,6 +14,7 @@ import android.widget.Scroller;
 
 import com.eduvilar.zenhome.base.BaseFragment;
 import com.eduvilar.zenhome.base.FragmentAdapter;
+import com.eduvilar.zenhome.callback.FragmentChangeCallback;
 
 import java.lang.reflect.Field;
 
@@ -25,6 +26,7 @@ public class Pager extends ViewPager implements ViewPager.PageTransformer {
     private BaseFragment[] fragments;
     private FragmentManager manager;
     private FixedSpeedScroller mScroller = null;
+    private FragmentChangeCallback callback;
 
     public Pager(Context context) {
         super(context);
@@ -89,16 +91,22 @@ public class Pager extends ViewPager implements ViewPager.PageTransformer {
     }
 
     @Override
-    public void setCurrentItem(int item) {
+    public void setCurrentItem(int item, boolean transition) {
         boolean invokeMeLater = false;
+
+        Class<? extends BaseFragment> clazz = fragments[item].getClass();
 
         if(super.getCurrentItem() == 0 && item == 0)
             invokeMeLater = true;
 
-        super.setCurrentItem(item);
-
         if(invokeMeLater && listener != null)
             listener.onPageSelected(0);
+
+        if (callback != null) {
+            callback.fragmentChanged(clazz);
+        }
+
+        super.setCurrentItem(item, transition);
     }
 
     @Override
@@ -139,11 +147,12 @@ public class Pager extends ViewPager implements ViewPager.PageTransformer {
      * Override the Scroller instance with our own class so we can change the
      * duration
      */
-    public void init(Context context, BaseFragment[] fragments, FragmentManager manager) {
+    public void init(Context context, BaseFragment[] fragments, FragmentManager manager, FragmentChangeCallback callback) {
         try {
             setPageTransformer(false, this);
             this.fragments = fragments;
             this.manager = manager;
+            this.callback = callback;
             setAdapter(new FragmentAdapter(this.manager, this.fragments));
             Class<?> viewpager = ViewPager.class;
             Field scroller = viewpager.getDeclaredField("mScroller");

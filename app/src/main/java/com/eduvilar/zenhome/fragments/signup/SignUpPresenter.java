@@ -24,9 +24,9 @@ public class SignUpPresenter implements SignUpContract.Presenter {
     }
 
     @Override
-    public void signUp(User user) {
+    public void signUp(String email, String password, String photoPath) {
         view.signingUp();
-        postData.signUpUser(user, new SignUpCallback() {
+        postData.signUpUser(email, password, photoPath, new SignUpCallback() {
             @Override
             public void success(String name) {
                 view.signedUp(name);

@@ -24,7 +24,7 @@ public interface SignUpContract {
 
         void init();
 
-        void signUp(User user);
+        void signUp(String email, String password, String photoPath);
 
     }
 }

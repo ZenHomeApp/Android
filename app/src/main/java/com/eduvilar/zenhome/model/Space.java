@@ -17,15 +17,15 @@ import java.util.List;
  * Created by efraespada on 29/11/2017.
  */
 
-public class HouseModel {
+public class Space {
 
     private List<Appliance> appliances;
 
-    public HouseModel() {
+    public Space() {
         // nothing to do here
     }
 
-    public HouseModel(List<Appliance> appliances) {
+    public Space(List<Appliance> appliances) {
         this.appliances = appliances;
     }
 

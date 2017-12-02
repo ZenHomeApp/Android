@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import com.eduvilar.zenhome.App;
 import com.eduvilar.zenhome.callback.LoginCallback;
 import com.eduvilar.zenhome.model.User;
+import com.eduvilar.zenhome.utils.UserUtils;
 import com.efraespada.androidstringobfuscator.AndroidStringObfuscator;
 import com.google.gson.Gson;
 
@@ -31,6 +32,7 @@ public class GetData implements DataContract.Get {
                 String storedUser = AndroidStringObfuscator.decryptString(enStoredUser);
                 User user = gson.fromJson(storedUser, User.class);
                 if (user.getPassword().equals(enPass)) {
+                    UserUtils.setUser(user);
                     callback.success(user);
                 } else if (user == null) {
                     callback.fail("user_not_found");

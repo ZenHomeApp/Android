@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+
 /**
  * Created by eduardovilar10 on 23/11/2017.
  */
@@ -27,6 +29,11 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public abstract void onBackPressed();
+
+    protected IDrawerItem[] getActionItems() {
+        return new IDrawerItem[0];
+    }
+
 
     @Nullable
     @Override

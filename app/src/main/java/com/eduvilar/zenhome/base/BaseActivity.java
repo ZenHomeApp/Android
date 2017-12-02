@@ -2,25 +2,37 @@ package com.eduvilar.zenhome.base;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.eduvilar.zenhome.R;
+import com.eduvilar.zenhome.callback.FragmentChangeCallback;
 import com.eduvilar.zenhome.model.Pager;
+import com.eduvilar.zenhome.model.User;
+import com.eduvilar.zenhome.utils.ImageUtils;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.ContainerDrawerItem;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
+import com.mikepenz.materialdrawer.util.DrawerImageLoader;
+
+import java.util.List;
 
 /**
  * Created by eduardovilar10 on 23/11/2017.
@@ -36,7 +48,17 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract BaseFragment[] fragments();
 
+    protected long SETTINGS = 44;
+
+    protected Drawer sidebar;
+
     private Pager pager;
+
+    private static final int ACTION_ITEM = 3;
+
+    protected User getProfileInfo() {
+        return null;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,33 +68,61 @@ public abstract class BaseActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        AccountHeader headerResult = new AccountHeaderBuilder()
-                .withActivity(this)
-                .withSelectionListEnabledForSingleProfile(false)
-                .withHeaderBackground(R.drawable.header)
-                .addProfiles(
-                        new ProfileDrawerItem().withName("Eduardo Vilar").withEmail("eduardovilar10@gmail.com").withIcon(getResources().getDrawable(R.mipmap.ic_launcher_round))
-                )
-                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                    @Override
-                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                        return false;
-                    }
-                })
-                .build();
-
         DrawerBuilder builder = new DrawerBuilder()
                 .withActivity(this)
-                .withToolbar(toolbar)
-                .withAccountHeader(headerResult);
+                .withToolbar(toolbar);
+
+        if (getProfileInfo() != null) {
+            AccountHeader headerResult = new AccountHeaderBuilder()
+                    .withActivity(this)
+                    .withSelectionListEnabledForSingleProfile(false)
+                    .withHeaderBackground(R.drawable.header)
+                    .addProfiles(
+                            new ProfileDrawerItem().withName(getProfileInfo().getName()).withEmail(getProfileInfo().getEmail()).withIcon(getProfileInfo().getPhotoURL())
+                    )
+                    .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                        @Override
+                        public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                            return false;
+                        }
+                    })
+                    .build();
+
+            builder.withAccountHeader(headerResult);
+        }
 
         builder.addDrawerItems(getNavigationItems());
 
-        builder.build();
+        sidebar = builder.build();
 
         pager = (Pager) findViewById(R.id.pager);
         pager.setOffscreenPageLimit(fragments().length);
-        pager.init(this, fragments(), getFragmentManager());
+        pager.init(this, fragments(), getFragmentManager(), new FragmentChangeCallback() {
+            @Override
+            public void fragmentChanged(Class<? extends BaseFragment> clazz) {
+                List<IDrawerItem> drawerItems = sidebar.getDrawerItems();   // current items
+                IDrawerItem[] navigationItems = getNavigationItems();       // current items from activity
+                IDrawerItem[] actionItems = pager.getCurrentFragment().getActionItems();    // current action items
+
+                sidebar.removeAllItems();
+
+                if (navigationItems.length > 0) {
+                    for (int i = 0; i < navigationItems.length; i++) {
+                        IDrawerItem item = navigationItems[i];
+                        sidebar.addItemAtPosition(item, sidebar.getDrawerItems().size() + 1);
+                    }
+                }
+                if (actionItems.length > 0) {
+                    sidebar.addItemAtPosition(new SectionDrawerItem().withName("Acciones"), navigationItems.length + 1);
+
+                    int size = sidebar.getDrawerItems().size();
+
+                    for (int i = 0; i < actionItems.length; i++) {
+                        sidebar.addItemAtPosition(actionItems[i], 1 + i + size);
+                    }
+                }
+            }
+        });
         pager.setCurrentItem(fragments()[0].getClass());
     }
 
